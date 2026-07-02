@@ -26,6 +26,9 @@ import ProductDetail from './products/ProductDetail';
 import UserDetails from './vss_nets/User-Details';
 import UsersList from './vss_nets/Users-List';
 
+// GitHub Profiler import
+import GitHubProfiler from './github-profiler/GitHubProfiler';
+
 function App() {
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem('react-lab-theme');
@@ -58,6 +61,9 @@ function App() {
             <Route path='/text_v' element={<TextVisiblity/>}/>
             <Route path='/selector_output' element={<Selector_output/>} />
             <Route path='/add_list' element={<AddList />} />
+
+            {/* GitHub Profiler route */}
+            <Route path="/github-profiler" element={<GitHubProfiler />} />
 
             //vss Nets 
 
