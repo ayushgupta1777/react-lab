@@ -33,13 +33,13 @@ function App() {
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem('react-lab-theme');
     if (saved) return saved;
-    const media = window.matchMedia('(prefers-color-scheme: dark)');
-    return media.matches ? 'dark' : 'light';
+    // Forcing light theme per user request
+    return 'light';
   });
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('react-lab-theme', theme);
+    document.documentElement.setAttribute('data-theme', 'light');
+    localStorage.setItem('react-lab-theme', 'light');
   }, [theme]);
 
   const toggleTheme = () => {

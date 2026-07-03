@@ -2,30 +2,19 @@ import React from 'react';
 
 export default function BioCard({ avatarUrl, name, login, bio, htmlUrl }) {
   return (
-    <div style={{ textAlign: 'center' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: '1rem', padding: '1rem' }}>
       <img
         src={avatarUrl}
         alt={`${name || login} avatar`}
-        style={{
-          width: '120px',
-          height: '120px',
-          borderRadius: '50%',
-          objectFit: 'cover',
-          marginBottom: '1rem',
-          border: '3px solid var(--border-color, #eaeaea)'
-        }}
+        style={{ width: '120px', height: '120px', borderRadius: '50%', border: '2px solid var(--border-color)' }}
       />
-      <h2 style={{ margin: '0 0 0.25rem 0', fontSize: '1.3rem' }}>{name || login}</h2>
-      <p style={{ margin: '0 0 1rem 0', color: 'var(--text-muted, #666)', fontSize: '0.9rem' }}>@{login}</p>
+      <div>
+        <h2 style={{ margin: 0 }}>{name || login}</h2>
+        <p style={{ margin: 0, color: 'var(--text-secondary)' }}>@{login}</p>
+      </div>
       
       {bio && (
-        <p style={{
-          fontSize: '0.85rem',
-          lineHeight: '1.4',
-          margin: '0 0 1.25rem 0',
-          color: 'var(--text-secondary, #444)',
-          fontStyle: 'italic'
-        }}>
+        <p style={{ fontStyle: 'italic', color: 'var(--text-secondary)', margin: 0 }}>
           "{bio}"
         </p>
       )}
@@ -34,20 +23,10 @@ export default function BioCard({ avatarUrl, name, login, bio, htmlUrl }) {
         href={htmlUrl}
         target="_blank"
         rel="noopener noreferrer"
-        style={{
-          display: 'inline-block',
-          width: '100%',
-          padding: '0.5rem 0',
-          backgroundColor: '#24292e',
-          color: '#fff',
-          borderRadius: 'var(--radius-md, 4px)',
-          textDecoration: 'none',
-          fontSize: '0.9rem',
-          fontWeight: '600',
-          marginBottom: '1.25rem'
-        }}
+        className="btn btn-github"
+        style={{ textDecoration: 'none', display: 'inline-block', marginTop: '0.5rem' }}
       >
-        View GitHub Profile
+        View Profile on GitHub
       </a>
     </div>
   );

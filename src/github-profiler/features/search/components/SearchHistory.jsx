@@ -4,43 +4,20 @@ export default function SearchHistory({ searchHistory, activeUser, onHistoryClic
   if (searchHistory.length === 0) return null;
 
   return (
-    <div style={{ marginTop: '1.5rem' }}>
-      <div style={{
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: '0.5rem'
-      }}>
-        <span style={{ fontSize: '0.8rem', fontWeight: '600', color: 'var(--text-muted, #666)' }}>Recent Searches</span>
-        <button
-          onClick={onClear}
-          style={{
-            background: 'none',
-            border: 'none',
-            color: 'var(--danger, #ff3b30)',
-            fontSize: '0.75rem',
-            cursor: 'pointer',
-            padding: 0
-          }}
-        >
+    <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border-color)' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+        <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>Recent Searches</span>
+        <button onClick={onClear} style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer', fontSize: '0.85rem' }}>
           Clear
         </button>
       </div>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
         {searchHistory.map((histUser) => (
           <button
             key={histUser}
             onClick={() => onHistoryClick(histUser)}
-            style={{
-              padding: '0.3rem 0.6rem',
-              borderRadius: '12px',
-              border: '1px solid var(--border-color, #ccc)',
-              backgroundColor: histUser === activeUser ? 'var(--accent-light, #e6f0ff)' : 'var(--bg-tertiary, #fff)',
-              borderColor: histUser === activeUser ? 'var(--accent, #0076ff)' : 'var(--border-color, #ccc)',
-              fontSize: '0.8rem',
-              cursor: 'pointer',
-              color: 'inherit'
-            }}
+            className={`btn ${histUser === activeUser ? 'btn-github' : 'btn-secondary'}`}
+            style={{ padding: '0.25rem 0.6rem', fontSize: '0.85rem', borderRadius: '16px' }}
           >
             {histUser}
           </button>

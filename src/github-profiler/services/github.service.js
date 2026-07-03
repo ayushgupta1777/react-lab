@@ -1,13 +1,4 @@
-/**
- * Service to handle communications with GitHub API.
- */
-
 export const githubService = {
-  /**
-   * Fetches user profile data from GitHub.
-   * @param {string} username - The GitHub username to search.
-   * @returns {Promise<Object>} - User profile JSON object.
-   */
   fetchUserProfile: async (username) => {
     const profileRes = await fetch(`https://api.github.com/users/${username}`);
     
@@ -24,18 +15,33 @@ export const githubService = {
     return await profileRes.json();
   },
 
-  /**
-   * Fetches a user's repositories from GitHub.
-   * @param {string} username - The GitHub username.
-   * @returns {Promise<Array>} - List of public repositories.
-   */
   fetchUserRepos: async (username) => {
-    const reposRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`);
+    const reposRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100&sort=updated&direction=desc`);
     
     if (!reposRes.ok) {
       throw new Error(`Failed to fetch repositories (Status: ${reposRes.status})`);
     }
     
     return await reposRes.json();
+  },
+
+  fetchUserFollowers: async (username) => {
+    const followersRes = await fetch(`https://api.github.com/users/${username}/followers?per_page=100`);
+    
+    if (!followersRes.ok) {
+      throw new Error(`Failed to fetch followers (Status: ${followersRes.status})`);
+    }
+    
+    return await followersRes.json();
+  },
+
+  fetchUserFollowing: async (username) => {
+    const followingRes = await fetch(`https://api.github.com/users/${username}/following?per_page=100`);
+    
+    if (!followingRes.ok) {
+      throw new Error(`Failed to fetch following (Status: ${followingRes.status})`);
+    }
+    
+    return await followingRes.json();
   }
 };
