@@ -486,6 +486,17 @@ button, input, select, textarea {
   transform: translateY(-1px);
 }
 
+.btn-github {
+  background-color: #24292e;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(36, 41, 46, 0.2);
+}
+
+.btn-github:hover {
+  background-color: #1b1f23;
+  transform: translateY(-1px);
+}
+
 .btn-secondary {
   background-color: var(--bg-tertiary);
   color: var(--text-primary);
@@ -779,6 +790,14 @@ button, input, select, textarea {
 }
 
 input[type="text"], input[type="email"], input[type="password"], select {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  width: 100%;
+  outline: none;
+  font-size: 0.95rem;
   transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background-color var(--transition-fast);
 }
 
