@@ -1,28 +1,47 @@
 import React from 'react';
+import { AnimatePresence } from 'framer-motion';
+import {
+  HistoryContainer,
+  HeaderRow,
+  Title,
+  ClearButton,
+  TagsContainer,
+  HistoryTag
+} from './SearchHistory.styles';
 
 export default function SearchHistory({ searchHistory, activeUser, onHistoryClick, onClear }) {
   if (searchHistory.length === 0) return null;
 
   return (
-    <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border-color)' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-        <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>Recent Searches</span>
-        <button onClick={onClear} style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer', fontSize: '0.85rem' }}>
-          Clear
-        </button>
-      </div>
-      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
-        {searchHistory.map((histUser) => (
-          <button
-            key={histUser}
-            onClick={() => onHistoryClick(histUser)}
-            className={`btn ${histUser === activeUser ? 'btn-github' : 'btn-secondary'}`}
-            style={{ padding: '0.25rem 0.6rem', fontSize: '0.85rem', borderRadius: '16px' }}
-          >
-            {histUser}
-          </button>
-        ))}
-      </div>
-    </div>
+    <HistoryContainer 
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: 'auto' }}
+      exit={{ opacity: 0, height: 0 }}
+    >
+      <HeaderRow>
+        <Title>Recent Searches</Title>
+        <ClearButton onClick={onClear}>Clear</ClearButton>
+      </HeaderRow>
+      <TagsContainer layout>
+        <AnimatePresence>
+          {searchHistory.map((histUser) => (
+            <HistoryTag
+              layout
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              key={histUser}
+              onClick={() => onHistoryClick(histUser)}
+              $isActive={histUser === activeUser}
+              className={`btn ${histUser === activeUser ? 'btn-primary' : 'btn-secondary'}`}
+            >
+              {histUser}
+            </HistoryTag>
+          ))}
+        </AnimatePresence>
+      </TagsContainer>
+    </HistoryContainer>
   );
 }

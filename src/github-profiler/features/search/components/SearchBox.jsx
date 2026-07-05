@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
-import Input from '../../../components/common/Input/Input';
-import Button from '../../../components/common/Button/Button';
+import { motion } from 'framer-motion';
+import {
+  SearchForm,
+  SearchLabel,
+  InputGroup,
+  StyledInput,
+  SubmitButton
+} from './SearchBox.styles';
 
 export default function SearchBox({ onSubmit, loading, initialUsername = '' }) {
   const [username, setUsername] = useState(initialUsername);
@@ -13,21 +19,26 @@ export default function SearchBox({ onSubmit, loading, initialUsername = '' }) {
   };
 
   return (
-    <form onSubmit={handleFormSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-      <label htmlFor="username-input" style={{ fontWeight: 600 }}>Search User</label>
-      <div style={{ display: 'flex', gap: '0.5rem' }}>
-        <Input
+    <SearchForm 
+      onSubmit={handleFormSubmit} 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+    >
+      <SearchLabel htmlFor="username-input">Search GitHub User</SearchLabel>
+      <InputGroup>
+        <StyledInput
           id="username-input"
           placeholder="e.g. gaearon"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
-          style={{ flex: 1 }}
         />
-        <Button type="submit" disabled={loading} className="btn btn-github">
-          {loading ? '...' : 'Search'}
-        </Button>
-      </div>
-    </form>
+        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+          <SubmitButton type="submit" disabled={loading} className="btn btn-primary">
+            {loading ? '...' : 'Search'}
+          </SubmitButton>
+        </motion.div>
+      </InputGroup>
+    </SearchForm>
   );
 }
