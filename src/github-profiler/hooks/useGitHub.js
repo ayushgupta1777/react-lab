@@ -10,6 +10,7 @@ export function useGitHub() {
   
   const [followersList, setFollowersList] = useState([]);
   const [followingList, setFollowingList] = useState([]);
+  const [gists, setGists] = useState([]);
 
   const [searchHistory, setSearchHistory] = useState(() => {
     const saved = localStorage.getItem('github_search_history');
@@ -25,6 +26,7 @@ export function useGitHub() {
     setRepos([]);
     setFollowersList([]);
     setFollowingList([]);
+    setGists([]);
 
     try {
       const profileData = await githubService.fetchUserProfile(userToSearch);
@@ -38,15 +40,17 @@ export function useGitHub() {
         return updated;
       });
 
-      const [reposData, followersData, followingData] = await Promise.all([
+      const [reposData, followersData, followingData, gistsData] = await Promise.all([
         githubService.fetchUserRepos(userToSearch),
         githubService.fetchUserFollowers(userToSearch),
-        githubService.fetchUserFollowing(userToSearch)
+        githubService.fetchUserFollowing(userToSearch),
+        githubService.fetchUserGists(userToSearch)
       ]);
 
       setRepos(reposData);
       setFollowersList(followersData);
       setFollowingList(followingData);
+      setGists(gistsData);
     } catch (err) {
       console.error(err);
       setError(err.message || 'An error occurred while fetching data.');
@@ -65,6 +69,7 @@ export function useGitHub() {
     repos,
     followersList,
     followingList,
+    gists,
     loading,
     error,
     searchHistory,

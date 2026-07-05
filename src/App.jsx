@@ -27,7 +27,7 @@ import UserDetails from './vss_nets/User-Details';
 import UsersList from './vss_nets/Users-List';
 
 // GitHub Profiler import
-import GitHubProfiler from './github-profiler/GitHubProfiler';
+import ProfilerPage from './github-profiler/pages/ProfilerPage';
 
 function App() {
   const [theme, setTheme] = useState(() => {
@@ -63,9 +63,9 @@ function App() {
             <Route path='/add_list' element={<AddList />} />
 
             {/* GitHub Profiler route */}
-            <Route path="/github-profiler" element={<GitHubProfiler />} />
+            <Route path="/github-profiler" element={<ProfilerPage />} />
 
-            //vss Nets 
+            {/* vss Nets */}
 
             <Route path={`/users/:id/:name`} element={<UserDetails />} />
             <Route path={`/users`} element={<UsersList />} />

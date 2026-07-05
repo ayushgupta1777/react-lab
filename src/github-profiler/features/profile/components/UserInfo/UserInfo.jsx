@@ -1,53 +1,78 @@
 import React from 'react';
+import {
+  UserInfoContainer,
+  TabsContainer,
+  TabButton,
+  TabButtonBg,
+  TabCount,
+  TabLabel,
+  MetaContainer,
+  MetaRow,
+  MetaIcon,
+  MetaLink
+} from './UserInfo.styles';
 
-export default function UserInfo({ publicRepos, followers, following, company, location, blog, createdAt, activeTab, onTabChange }) {
-  const getTabStyle = (tabName) => ({
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    cursor: 'pointer',
-    padding: '0.5rem',
-    borderRadius: '8px',
-    background: activeTab === tabName ? '#f0f0f0' : 'transparent',
-    border: activeTab === tabName ? '1px solid #ccc' : '1px solid transparent'
-  });
+export default function UserInfo({ publicRepos, followers, following, gistsCount, company, location, blog, createdAt, activeTab, onTabChange }) {
+  const tabs = [
+    { id: 'repos', label: 'Repos', value: publicRepos },
+    { id: 'followers', label: 'Followers', value: followers },
+    { id: 'following', label: 'Following', value: following },
+    { id: 'gists', label: 'Gists', value: gistsCount },
+  ];
 
   return (
-    <div>
-      {/* User Stats */}
-      <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '1rem' }}>
-        <div style={getTabStyle('repos')} onClick={() => onTabChange('repos')}>
-          <div style={{ fontWeight: 600 }}>{publicRepos}</div>
-          <div style={{ fontSize: '0.8rem', color: '#666' }}>Repos</div>
-        </div>
-        <div style={getTabStyle('followers')} onClick={() => onTabChange('followers')}>
-          <div style={{ fontWeight: 600 }}>{followers}</div>
-          <div style={{ fontSize: '0.8rem', color: '#666' }}>Followers</div>
-        </div>
-        <div style={getTabStyle('following')} onClick={() => onTabChange('following')}>
-          <div style={{ fontWeight: 600 }}>{following}</div>
-          <div style={{ fontSize: '0.8rem', color: '#666' }}>Following</div>
-        </div>
-      </div>
+    <UserInfoContainer
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.3 }}
+    >
+      <TabsContainer>
+        {tabs.map((tab) => (
+          <TabButton 
+            key={tab.id}
+            $active={activeTab === tab.id}
+            onClick={() => onTabChange(tab.id)}
+          >
+            {activeTab === tab.id && (
+              <TabButtonBg 
+                layoutId="activeTabBg" 
+                transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+              />
+            )}
+            <TabCount>{tab.value}</TabCount>
+            <TabLabel>{tab.label}</TabLabel>
+          </TabButton>
+        ))}
+      </TabsContainer>
 
-      {/* Additional Meta */}
-      <ul>
-        {company && <li>Company: {company}</li>}
-        {location && <li>Location: {location}</li>}
+      <MetaContainer>
+        {company && (
+          <MetaRow>
+            <MetaIcon>🏢</MetaIcon> <span>{company}</span>
+          </MetaRow>
+        )}
+        {location && (
+          <MetaRow>
+            <MetaIcon>📍</MetaIcon> <span>{location}</span>
+          </MetaRow>
+        )}
         {blog && (
-          <li>
-            Website:{' '}
-            <a 
+          <MetaRow>
+            <MetaIcon>🔗</MetaIcon> 
+            <MetaLink 
               href={blog.startsWith('http') ? blog : `https://${blog}`} 
               target="_blank" 
               rel="noopener noreferrer" 
             >
               {blog}
-            </a>
-          </li>
+            </MetaLink>
+          </MetaRow>
         )}
-        <li>Joined: {new Date(createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short' })}</li>
-      </ul>
-    </div>
+        <MetaRow>
+          <MetaIcon>🗓️</MetaIcon> 
+          <span>Joined {new Date(createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'long' })}</span>
+        </MetaRow>
+      </MetaContainer>
+    </UserInfoContainer>
   );
 }

@@ -43,5 +43,15 @@ export const githubService = {
     }
     
     return await followingRes.json();
+  },
+
+  fetchUserGists: async (username) => {
+    const gistsRes = await fetch(`https://api.github.com/users/${username}/gists?per_page=100`);
+    
+    if (!gistsRes.ok) {
+      throw new Error(`Failed to fetch gists (Status: ${gistsRes.status})`);
+    }
+    
+    return await gistsRes.json();
   }
 };
